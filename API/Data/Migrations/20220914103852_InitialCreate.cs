@@ -6,8 +6,8 @@ namespace API.Data.Migrations
 {
     public partial class InitialCreate : Migration
     {
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
+       protected override void Up(MigrationBuilder migrationBuilder)
+        { /*
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
@@ -19,7 +19,7 @@ namespace API.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
-                });
+                });*/
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
