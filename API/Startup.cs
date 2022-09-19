@@ -42,7 +42,7 @@ namespace API
 
         // This method gets called by the runtime. Use this method to add services to the container.
         /*
-        if we ant to make a class or a service available
+        if we want to make a class or a service available
         to other areas of our application, we can add them
         inside this container and .net core is going to take care
         of the creation of these classes and  the destruction
