@@ -7,6 +7,7 @@ using API.Data;
 using API.DTOs;
 using API.Entities;
 using API.Extensions;
+using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -29,9 +30,20 @@ namespace API.Controllers
         }
         
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers(){
+        /*because it's a query string, we're going to need to specify [FromQuery], we're going
+        to have to give our API controller this attribute. 
+        So it's going to get the user parameters from the query string.
+        And this is just because a query string itself doesn't need to be inside an object, so it's not sure
+        what to do with this.*/
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers([FromQuery]UserParams userParams){
             
-            var users=await _userRepository.GetMembersAsync();
+            var user= await _userRepository.GetUserByUsernameAsync(User.GetUsername());
+            userParams.CurrentUsername=user.UserName;
+            if(string.IsNullOrEmpty(userParams.Gender))
+                userParams.Gender=user.Gender=="male"?"female":"male";
+
+            var users=await _userRepository.GetMembersAsync(userParams);
+            Response.AddPaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
             return Ok(users);
         }
 
