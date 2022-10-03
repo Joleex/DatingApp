@@ -40,6 +40,7 @@ export class MembersService {
 
   }
 
+
   getMembers(userParams: UserParams){
    /* if(this.members.length>0) return of(this.members);
     return this.http.get<Member[]>(this.baseUrl+'users').pipe(
@@ -102,7 +103,17 @@ export class MembersService {
     return this.http.delete(this.baseUrl+'users/delete-photo/'+photoId);
   }
 
-  
+  addLike(username: string)
+  {//because this is a post we do need to to add an empty body and we will just add an empty object
+    return this.http.post(this.baseUrl+'likes/'+username, {});
+  }
+
+  getLikes(predicate: string, pageNumber, pageSize){
+    let params=this.getPaginationHeaders(pageNumber,pageSize);
+    params=params.append('predicate', predicate);
+    //return this.http.get<Partial<Member[]>>(this.baseUrl+'likes?predicate='+predicate)
+    return this.getPaginatedResult<Partial<Member[]>>(this.baseUrl+'likes', params);
+  }
 
   private getPaginatedResult<T>(url, params) {
     
