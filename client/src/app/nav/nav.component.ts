@@ -46,8 +46,18 @@ export class NavComponent implements OnInit {
     }*/);
   }
 
-  reset(){
+  resetFilter(){
 
+    this.reset1();
+    this.logout();
+  }
+  reset1(){
+
+    this.userParams=this.memberService.resetUserParams();
+  }
+
+  reset()
+  {
     this.userParams=this.memberService.resetUserParams();
     this.memberService.setUserParams(this.userParams);
     this.memberService.getMembers(this.userParams).subscribe(response =>{

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.DTOs;
 using API.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,8 @@ namespace API.Data
         public DbSet<AppUser> Users { get; set; }
 
         public DbSet<UserLike> Likes { get; set; }
+
+        public DbSet<Message> Messages { get; set; }
 
         /*And what we also need to do inside here is give the entities some configuration. 
         And the way that we do that is we need to override a method inside the DB context 
@@ -42,6 +45,16 @@ namespace API.Data
                 .WithMany(l=>l.LikedByUsers) /*So a source user can, like many other users, is what we're seeing here.*/
                 .HasForeignKey(s=>s.LikedUserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Message>()
+            .HasOne(u=>u.Recipient)
+            .WithMany(m=>m.MessagesReceived)
+            .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Message>()
+            .HasOne(u=>u.Sender)
+            .WithMany(m=>m.MessagesSent)
+            .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
