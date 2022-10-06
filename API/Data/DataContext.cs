@@ -5,15 +5,21 @@ using System.Threading.Tasks;
 using API.DTOs;
 using API.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace API.Data
 {
-    public class DataContext : DbContext
-    {
+    public class DataContext : IdentityDbContext<AppUser, AppRole, int, 
+                IdentityUserClaim<int>, AppUserRole, IdentityUserLogin<int>,
+                IdentityRoleClaim<int>, IdentityUserToken<int>>
+    {/*Now, if we weren't interested in dealing with roles and getting a list of roles, this would be all
+    we'd need to do.
+    However, because we want to get a list of the user roles, then we need to go a bit further and we
+    need to identify every single type. Unfortunately, that we need to add to identity.*/
         public DataContext(DbContextOptions options) : base(options)
         {
         }
-        public DbSet<AppUser> Users { get; set; }
 
         public DbSet<UserLike> Likes { get; set; }
 
@@ -25,6 +31,19 @@ namespace API.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<AppUser>()
+                .HasMany(ur => ur.UserRoles)
+                .WithOne(u => u.User)
+                .HasForeignKey(ur =>ur.UserId)
+                .IsRequired();
+
+            builder.Entity<AppRole>()
+                .HasMany(ur => ur.UserRoles)
+                .WithOne(u => u.Role)
+                .HasForeignKey(ur =>ur.RoleId)
+                .IsRequired();
+
             /*So what we'll do is we'll work on our user like entity here and we'll say builder and then we say entity,
             and then we pass in the entity as a type parameter of what we want to configure.
             And this is going to be our user like.*/

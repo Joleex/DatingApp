@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { Message } from '../_models/message';
 import { PaginatedResult } from '../_models/pagination';
 import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
 

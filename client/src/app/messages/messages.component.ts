@@ -1,5 +1,6 @@
-import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+
 import { Component, OnInit } from '@angular/core';
+import { Message } from '../_models/message';
 import { Pagination } from '../_models/pagination';
 import { MessageService } from '../_services/message.service';
 
@@ -34,7 +35,7 @@ export class MessagesComponent implements OnInit {
   deleteMessage(id: number) {
     this.messageService.deleteMessage(id).subscribe(() => {
       //1-how many messages we want to delete
-      this.messages.splice(this.messages.findIndex(m => m.id === id.toString()), 1);
+      this.messages.splice(this.messages.findIndex(m => m.id === id), 1);
     })
   }
 

@@ -29,6 +29,7 @@ namespace API.Controllers
             _userRepository = userRepository;
         }
         
+        //[Authorize(Roles ="Admin")]
         [HttpGet]
         /*because it's a query string, we're going to need to specify [FromQuery], we're going
         to have to give our API controller this attribute. 
@@ -47,6 +48,7 @@ namespace API.Controllers
             return Ok(users);
         }
 
+        //[Authorize(Roles ="Member")]
         //api/users/3
         [HttpGet("{username}", Name ="GetUser")]
         /*list or ienumerable but ienumerable is more proprieted type*/
