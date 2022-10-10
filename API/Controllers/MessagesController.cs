@@ -26,7 +26,7 @@ namespace API.Controllers
             _messageRepository = messageRepository;
         }
 
-        [HttpPost]
+       /* [HttpPost]
         public async Task<ActionResult<MessageDto>> CreateMessage(CreateMessageDto createMessageDto)
         {
             var username=User.GetUsername();
@@ -53,7 +53,7 @@ namespace API.Controllers
 
             return BadRequest("Failed to send message");
         }
-
+*/
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MessageDto>>> GetMessagesForUser([FromQuery] MessageParams messageParams){
             messageParams.Username=User.GetUsername();

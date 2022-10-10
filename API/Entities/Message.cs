@@ -19,7 +19,7 @@ namespace API.Entities
         /*we want this to be optional because we don't want it to be null
         if the message has not been read*/
         public DateTime? DateRead { get; set; }
-        public DateTime MessageSent { get; set; }=DateTime.Now;
+        public DateTime MessageSent { get; set; }=DateTime.UtcNow;
         public bool SenderDeleted { get; set; }
         public bool RecipientDeleted { get; set; }
     }

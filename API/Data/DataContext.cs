@@ -24,6 +24,8 @@ namespace API.Data
         public DbSet<UserLike> Likes { get; set; }
 
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Group> Groups { get; set; }
+        public DbSet<Connection> Connections { get; set; }
 
         /*And what we also need to do inside here is give the entities some configuration. 
         And the way that we do that is we need to override a method inside the DB context 
@@ -31,6 +33,10 @@ namespace API.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.Entity<Group>()
+                .HasMany(x=>x.Connections)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<AppUser>()
                 .HasMany(ur => ur.UserRoles)

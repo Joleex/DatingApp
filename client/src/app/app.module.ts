@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 
@@ -32,6 +32,8 @@ import { HasRoleDirective } from './_directives/has-role.directive';
 import { UserManagementComponent } from './admin/user-management/user-management.component';
 import { PhotoManagementComponent } from './admin/photo-management/photo-management.component';
 import { RolesModalComponent } from './modals/roles-modal/roles-modal.component';
+import { PresenceService } from './_services/presence.service';
+import { UserParams } from './_models/userParams';
 
 @NgModule({
   declarations: [
@@ -72,7 +74,7 @@ import { RolesModalComponent } from './modals/roles-modal/roles-modal.component'
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi:true},
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi:true},
-    {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi:true}
+    {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi:true},
   ],
   bootstrap: [AppComponent]
 })
